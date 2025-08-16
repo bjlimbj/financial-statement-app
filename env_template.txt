@@ -1,23 +1,50 @@
-# API Keys
-OPENAI_API_KEY=your_openai_api_key_here
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-GOOGLE_API_KEY=your_google_api_key_here
-DART_API_KEY=your_dart_api_key_here
+import 'package:dotenv/dotenv.dart';
 
-# API Configuration
-API_BASE_URL=https://api.example.com
-DART_API_BASE_URL=https://opendart.fss.or.kr/api
+class EnvConfig {
+  static final EnvConfig _instance = EnvConfig._internal();
+  factory EnvConfig() => _instance;
+  EnvConfig._internal();
 
-# Debug Mode
-DEBUG_MODE=true
+  late DotEnv _env;
+  bool _isInitialized = false;
 
-# Database Configuration (필요시)
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=mydatabase
-DB_USER=myuser
-DB_PASSWORD=mypassword
+  /// 환경 변수 초기화
+  Future<void> initialize() async {
+    if (_isInitialized) return;
+    
+    _env = DotEnv(includePlatformEnvironment: true);
+    _env.load(['.env']);
+    _isInitialized = true;
+  }
 
-# Other Configuration
-LOG_LEVEL=info
-TIMEOUT_SECONDS=30
+  /// API 키 가져오기
+  String get openaiApiKey => _env['OPENAI_API_KEY'] ?? '';
+  String get anthropicApiKey => _env['ANTHROPIC_API_KEY'] ?? '';
+  String get googleApiKey => _env['GOOGLE_API_KEY'] ?? '';
+  String get dartApiKey => _env['DART_API_KEY'] ?? '';
+  
+  /// 기타 설정
+  String get apiBaseUrl => _env['API_BASE_URL'] ?? 'https://api.example.com';
+  String get dartApiBaseUrl => _env['DART_API_BASE_URL'] ?? 'https://opendart.fss.or.kr/api';
+  bool get debugMode => _env['DEBUG_MODE'] == 'true';
+
+  /// 환경 변수가 제대로 로드되었는지 확인
+  bool get isInitialized => _isInitialized;
+  
+  /// 모든 환경 변수 출력 (디버깅용)
+  void printAllEnvVars() {
+    if (!_isInitialized) {
+      print('환경 변수가 초기화되지 않았습니다.');
+      return;
+    }
+    
+    print('=== 환경 변수 목록 ===');
+    print('OPENAI_API_KEY: ${openaiApiKey.isNotEmpty ? "설정됨" : "설정되지 않음"}');
+    print('ANTHROPIC_API_KEY: ${anthropicApiKey.isNotEmpty ? "설정됨" : "설정되지 않음"}');
+    print('GOOGLE_API_KEY: ${googleApiKey.isNotEmpty ? "설정됨" : "설정되지 않음"}');
+    print('DART_API_KEY: ${dartApiKey.isNotEmpty ? "설정됨" : "설정되지 않음"}');
+    print('API_BASE_URL: $apiBaseUrl');
+    print('DART_API_BASE_URL: $dartApiBaseUrl');
+    print('DEBUG_MODE: $debugMode');
+  }
+}
