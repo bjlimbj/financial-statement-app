@@ -1,0 +1,23 @@
+# API Keys
+OPENAI_API_KEY=your_openai_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+GOOGLE_API_KEY=your_google_api_key_here
+DART_API_KEY=your_dart_api_key_here
+
+# API Configuration
+API_BASE_URL=https://api.example.com
+DART_API_BASE_URL=https://opendart.fss.or.kr/api
+
+# Debug Mode
+DEBUG_MODE=true
+
+# Database Configuration (필요시)
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=mydatabase
+DB_USER=myuser
+DB_PASSWORD=mypassword
+
+# Other Configuration
+LOG_LEVEL=info
+TIMEOUT_SECONDS=30
