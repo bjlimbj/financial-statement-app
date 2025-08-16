@@ -13,7 +13,7 @@ class EnvConfig {
     if (_isInitialized) return;
     
     _env = DotEnv(includePlatformEnvironment: true);
-    await _env.load(['.env']);
+    _env.load(['.env']);
     _isInitialized = true;
   }
 
